@@ -19,6 +19,8 @@ import dissimlab.simcore.SimControlException;
 public class Smo extends BasicSimObj
 {
     private Kolejka kolejka;
+    private static int liczbaZgloszonych=0;
+    private double prawdopodobienstwo=0.5;
 	private boolean wolne = true;
     public RozpocznijObsluge rozpocznijObsluge;
     public ZakonczObsluge zakonczObsluge;
@@ -28,7 +30,7 @@ public class Smo extends BasicSimObj
     public Smo() throws SimControlException
     {
         // Utworzenie wewnętrznej listy w kolejce
-        kolejka = new Kolejka(true,2,true);
+        kolejka = new Kolejka(true,4,false);
     }
 
     
@@ -60,4 +62,20 @@ public class Smo extends BasicSimObj
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+    public static int getLiczbaZgloszonych() {
+        return liczbaZgloszonych;
+    }
+
+    public static void setLiczbaZgloszonych(int liczbaZgloszonych) {
+        Smo.liczbaZgloszonych = liczbaZgloszonych;
+    }
+
+    public double getPrawdopodobienstwo() {
+        return prawdopodobienstwo;
+    }
+
+    public void setPrawdopodobienstwo(double prawdopodobienstwo) {
+        this.prawdopodobienstwo = prawdopodobienstwo;
+    }
 }

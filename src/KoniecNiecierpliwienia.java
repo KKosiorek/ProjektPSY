@@ -39,6 +39,7 @@ public class KoniecNiecierpliwienia extends BasicSimEvent<Zgloszenie, Object>
         System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": Koniec niecierpliwości zgl. nr: " + parent.getTenNr());
         if (parent.smo.getKolejka().usunWskazany(parent)){
             System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": Usunięto z kolejki zgl. nr: " + parent.getTenNr());
+            parent.smo.getKolejka().setLiczbaOdrzuconych(parent.smo.getKolejka().getLiczbaOdrzuconych()+1);
         }
         else
             System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": Problem z usunięciem z kolejki zgl. nr: " + parent.getTenNr());       	

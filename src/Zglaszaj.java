@@ -11,7 +11,7 @@ import dissimlab.simcore.SimParameters.SimDateField;
  */
 public class Zglaszaj extends BasicSimEvent<Otoczenie, Object>
 {
-	private static int liczbaZgloszonych=0;
+
     private SimGenerator generator;
     private Otoczenie parent;
 
@@ -20,14 +20,13 @@ public class Zglaszaj extends BasicSimEvent<Otoczenie, Object>
     {
     	super(parent, delay);
     	generator = new SimGenerator();
-		liczbaZgloszonych++;
+
     }
 
     public Zglaszaj(Otoczenie parent) throws SimControlException
     {
     	super(parent);
     	generator = new SimGenerator();
-		liczbaZgloszonych++;
     }
     
 	@Override
@@ -53,13 +52,13 @@ public class Zglaszaj extends BasicSimEvent<Otoczenie, Object>
 			if (parent.smo.liczbaZgl() == 1 && parent.smo.isWolne()) {
 				parent.smo.rozpocznijObsluge = new RozpocznijObsluge(parent.smo);
 			}
-			// Wygeneruj czas do kolejnego zgłoszenia
+
 
 		}else{
 			System.out.println(simTime() + " - " + simDate(SimDateField.HOUR24) + " - " + simDate(SimDateField.MINUTE) + " - " + simDate(SimDateField.SECOND) + " - " + simDate(SimDateField.MILLISECOND) + ": Otoczenie- Orzucono zgl. nr: " + zgl.getTenNr());
 			parent.smo.getKolejka().setLiczbaOdrzuconych(parent.smo.getKolejka().getLiczbaOdrzuconych()+1);
 		}
-
+		// Wygeneruj czas do kolejnego zgłoszenia
 		double odstep = generator.normal(5.0, 1.0);
 		setRepetitionPeriod(odstep);
         //alternatywnie: parent.zglaszaj = new Zglaszaj(parent, odstep);
@@ -71,4 +70,6 @@ public class Zglaszaj extends BasicSimEvent<Otoczenie, Object>
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 }

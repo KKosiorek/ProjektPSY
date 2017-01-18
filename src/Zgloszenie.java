@@ -31,6 +31,7 @@ public class Zgloszenie extends BasicSimObj
         setTenNr();
         this.smo = smo;
         this.priorytet=generator.uniformInt(1,10);
+        smo.setLiczbaZgloszonych(smo.getLiczbaZgloszonych()+1);
 
     }
 

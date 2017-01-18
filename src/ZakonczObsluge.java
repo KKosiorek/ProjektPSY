@@ -43,7 +43,7 @@ public class ZakonczObsluge extends BasicSimEvent<Smo, Zgloszenie>
 	protected void stateChange() throws SimControlException {
   		smoParent.setWolne(true);
         System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": SMO- Koniec obsługi zgl. nr: " + transitionParams.getTenNr());
-        	if(generator.probability(0.5)){
+        	if(generator.probability(smoParent.getPrawdopodobienstwo())){
 				System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": SMO- Powrot zgl. nr: " + transitionParams.getTenNr());
         		if(smoParent.getKolejka().dodaj(transitionParams)){
 					System.out.println(simTime() + " - " + simDate(SimDateField.HOUR24) + " - " + simDate(SimDateField.MINUTE) + " - " + simDate(SimDateField.SECOND) + " - " + simDate(SimDateField.MILLISECOND) + ": Powrot do kolejki- Dodano nowe zgl. nr: " + transitionParams.getTenNr());

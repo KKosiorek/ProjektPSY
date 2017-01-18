@@ -26,4 +26,8 @@ public class Otoczenie extends BasicSimObj {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	public Zglaszaj getZglaszaj() {
+		return zglaszaj;
+	}
 }
