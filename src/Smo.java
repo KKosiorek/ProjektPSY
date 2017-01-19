@@ -24,13 +24,15 @@ public class Smo extends BasicSimObj
 	private boolean wolne = true;
     public RozpocznijObsluge rozpocznijObsluge;
     public ZakonczObsluge zakonczObsluge;
+    private MonitoredVar czasSMO;
 	
     /** Creates a new instance of Smo 
      * @throws SimControlException */
     public Smo() throws SimControlException
     {
         // Utworzenie wewnętrznej listy w kolejce
-        kolejka = new Kolejka(true,4,false);
+        kolejka = new Kolejka(true,10,false);
+        this.czasSMO=new MonitoredVar();
     }
 
     
@@ -77,5 +79,13 @@ public class Smo extends BasicSimObj
 
     public void setPrawdopodobienstwo(double prawdopodobienstwo) {
         this.prawdopodobienstwo = prawdopodobienstwo;
+    }
+
+    public MonitoredVar getCzasSMO() {
+        return czasSMO;
+    }
+
+    public void setCzasSMO(MonitoredVar czasSMO) {
+        this.czasSMO = czasSMO;
     }
 }

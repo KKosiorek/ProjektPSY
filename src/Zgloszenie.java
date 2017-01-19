@@ -73,4 +73,11 @@ public class Zgloszenie extends BasicSimObj
 		return priorytet;
 	}
 
+    public double getCzasOdniesienia() {
+        return czasOdniesienia;
+    }
+
+    public void setCzasOdniesienia(double czasOdniesienia) {
+        this.czasOdniesienia = czasOdniesienia;
+    }
 }

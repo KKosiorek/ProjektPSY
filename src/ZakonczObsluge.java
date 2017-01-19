@@ -51,7 +51,10 @@ public class ZakonczObsluge extends BasicSimEvent<Smo, Zgloszenie>
 					System.out.println(simTime() + " - " + simDate(SimDateField.HOUR24) + " - " + simDate(SimDateField.MINUTE) + " - " + simDate(SimDateField.SECOND) + " - " + simDate(SimDateField.MILLISECOND) + ": Powrot do kolejki- Orzucono zgl. nr: " + transitionParams.getTenNr());
 					smoParent.getKolejka().setLiczbaOdrzuconych(smoParent.getKolejka().getLiczbaOdrzuconych()+1);
 				}
-        	}
+        	}else{
+        		smoParent.getCzasSMO().setValue(
+        				simTime()-transitionParams.getCzasOdniesienia());
+			}
       	// Zaplanuj dalsza obsługe w tym gnieździe
       	if (smoParent.liczbaZgl() > 0)
        	{
