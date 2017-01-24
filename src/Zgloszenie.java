@@ -22,6 +22,7 @@ public class Zgloszenie extends BasicSimObj
     public KoniecNiecierpliwienia koniecNiecierpliwosci;
     public Smo smo;
 	private int priorytet;
+    private boolean obsluzony=false;
     
 
 	public Zgloszenie(double Czas, Smo smo) throws SimControlException
@@ -79,5 +80,13 @@ public class Zgloszenie extends BasicSimObj
 
     public void setCzasOdniesienia(double czasOdniesienia) {
         this.czasOdniesienia = czasOdniesienia;
+    }
+
+    public boolean isObsluzony() {
+        return obsluzony;
+    }
+
+    public void setObsluzony(boolean obsluzony) {
+        this.obsluzony = obsluzony;
     }
 }

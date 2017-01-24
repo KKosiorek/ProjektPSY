@@ -20,22 +20,33 @@ public class Smo extends BasicSimObj
 {
     private Kolejka kolejka;
     private static int liczbaZgloszonych=0;
-    private double prawdopodobienstwo=0.5;
+    private double prawdopodobienstwo;
 	private boolean wolne = true;
     public RozpocznijObsluge rozpocznijObsluge;
     public ZakonczObsluge zakonczObsluge;
     private MonitoredVar czasSMO;
+    private SimEventSemaphore semaphore;
+    private SmoBis smoBis;
 	
     /** Creates a new instance of Smo 
      * @throws SimControlException */
-    public Smo() throws SimControlException
+    public Smo(SmoBis smoBis,SimEventSemaphore semaphore) throws SimControlException
     {
         // Utworzenie wewnętrznej listy w kolejce
+        this.smoBis=smoBis;
         kolejka = new Kolejka(true,10,false);
         this.czasSMO=new MonitoredVar();
+        this.semaphore=semaphore;
     }
 
-    
+    public SmoBis getSmoBis() {
+        return smoBis;
+    }
+
+    public void setSmoBis(SmoBis smoBis) {
+        this.smoBis = smoBis;
+    }
+
     public int liczbaZgl()
     {
         return kolejka.getSize();
@@ -87,5 +98,13 @@ public class Smo extends BasicSimObj
 
     public void setCzasSMO(MonitoredVar czasSMO) {
         this.czasSMO = czasSMO;
+    }
+
+    public SimEventSemaphore getSemaphore() {
+        return semaphore;
+    }
+
+    public void setSemaphore(SimEventSemaphore semaphore) {
+        this.semaphore = semaphore;
     }
 }

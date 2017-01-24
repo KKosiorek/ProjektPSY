@@ -26,6 +26,7 @@ public class ZakonczObsluge extends BasicSimEvent<Smo, Zgloszenie>
     {
     	super(parent, semafor, zgl);
         this.smoParent = parent;
+		generator=new SimGenerator();
     }
     
 	@Override
@@ -41,9 +42,10 @@ public class ZakonczObsluge extends BasicSimEvent<Smo, Zgloszenie>
 
 	@Override
 	protected void stateChange() throws SimControlException {
-  		smoParent.setWolne(true);
+
         System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": SMO- Koniec obsługi zgl. nr: " + transitionParams.getTenNr());
-        	if(generator.probability(smoParent.getPrawdopodobienstwo())){
+        	if((!generator.probability(smoParent.getPrawdopodobienstwo()))&&transitionParams.isObsluzony()==false){
+				smoParent.setWolne(true);
 				System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": SMO- Powrot zgl. nr: " + transitionParams.getTenNr());
         		if(smoParent.getKolejka().dodaj(transitionParams)){
 					System.out.println(simTime() + " - " + simDate(SimDateField.HOUR24) + " - " + simDate(SimDateField.MINUTE) + " - " + simDate(SimDateField.SECOND) + " - " + simDate(SimDateField.MILLISECOND) + ": Powrot do kolejki- Dodano nowe zgl. nr: " + transitionParams.getTenNr());
@@ -51,15 +53,33 @@ public class ZakonczObsluge extends BasicSimEvent<Smo, Zgloszenie>
 					System.out.println(simTime() + " - " + simDate(SimDateField.HOUR24) + " - " + simDate(SimDateField.MINUTE) + " - " + simDate(SimDateField.SECOND) + " - " + simDate(SimDateField.MILLISECOND) + ": Powrot do kolejki- Orzucono zgl. nr: " + transitionParams.getTenNr());
 					smoParent.getKolejka().setLiczbaOdrzuconych(smoParent.getKolejka().getLiczbaOdrzuconych()+1);
 				}
-        	}else{
-        		smoParent.getCzasSMO().setValue(
-        				simTime()-transitionParams.getCzasOdniesienia());
+				// Zaplanuj dalsza obsługe w tym gnieździe
+				if (smoParent.liczbaZgl() > 0)
+				{
+					smoParent.rozpocznijObsluge = new RozpocznijObsluge(smoParent);
+				}
+			}else{
+				smoParent.getCzasSMO().setValue(
+						simTime()-transitionParams.getCzasOdniesienia());
+				if(smoParent.getSmoBis().getKolejka().dodaj(transitionParams)){
+					System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": SMOBis-trafilo do kolejki  zgl. nr:" + transitionParams.getTenNr());
+					smoParent.setWolne(true);
+					if(smoParent.getSmoBis().getLiczZgl()==1&& smoParent.getSmoBis().isWolne()==true){
+						smoParent.getSmoBis().rozpocznijObsluge=new RozpocznijObslugeBis(smoParent.getSmoBis());
+					}
+
+					// Zaplanuj dalsza obsługe w tym gnieździe
+					if (smoParent.liczbaZgl() > 0)
+					{
+						smoParent.rozpocznijObsluge = new RozpocznijObsluge(smoParent);
+					}
+				}else{
+					System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": SMOBis- czeka w semaforze zgl. " + transitionParams.getTenNr());
+					transitionParams.setObsluzony(true);
+					smoParent.zakonczObsluge=new ZakonczObsluge(smoParent,smoParent.getSemaphore(),transitionParams);
+				}
 			}
-      	// Zaplanuj dalsza obsługe w tym gnieździe
-      	if (smoParent.liczbaZgl() > 0)
-       	{
-      		smoParent.rozpocznijObsluge = new RozpocznijObsluge(smoParent);        	
-       	}	
+
 	}
 
 	@Override

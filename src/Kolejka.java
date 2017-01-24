@@ -109,4 +109,12 @@ public class Kolejka {
     public void setDlKolejki(MonitoredVar dlKolejki) {
         dlKolejki = dlKolejki;
     }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
+    }
 }

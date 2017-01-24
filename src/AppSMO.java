@@ -10,6 +10,7 @@ import dissimlab.monitors.Diagram;
 import dissimlab.monitors.Statistics;
 import dissimlab.simcore.SimControlEvent;
 import dissimlab.simcore.SimControlException;
+import dissimlab.simcore.SimEventSemaphore;
 import dissimlab.simcore.SimManager;
 import dissimlab.simcore.SimParameters.SimControlStatus;
 
@@ -19,10 +20,12 @@ public class AppSMO {
 	public static void main(String[] args) {
 		try {
 			SimManager model = SimManager.getInstance();
-			// Powołanie Smo 
-			Smo smo = new Smo();
+			// Powołanie Smo
+			SimEventSemaphore semaphore = new SimEventSemaphore();
+			SmoBis smoBis = new SmoBis(semaphore);
+			Smo smo = new Smo(smoBis,semaphore);
 			Scanner scanner = new Scanner(System.in);
-			System.out.println("Podaj p-stwo powrotu zgłoszenia z obslugi: ");
+			System.out.println("Podaj p-stwo przejścia SMO bez powrotu: ");
 			smo.setPrawdopodobienstwo(scanner.nextDouble());
 
 			// Utworzenie otoczenia
@@ -48,6 +51,16 @@ public class AppSMO {
 					"Histogram dlugosc kolejki ");
 			d3.add(smo.getKolejka().getDlKolejki(), java.awt.Color.BLUE);
 			d3.show();
+
+            Diagram d6 = new Diagram(Diagram.DiagramType.DISTRIBUTION,
+                    "Dystyrbuanta czasu obslugi BIS");
+            d6.add(smoBis.getCzasSMO(), java.awt.Color.BLUE);
+            d6.show();
+
+            Diagram d7 = new Diagram(Diagram.DiagramType.HISTOGRAM,
+                    "Histogram dlugosc kolejkiBIS ");
+            d7.add(smoBis.getKolejka().getDlKolejki(), java.awt.Color.BLUE);
+            d7.show();
 		} catch (SimControlException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
