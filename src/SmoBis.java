@@ -17,7 +17,7 @@ public class SmoBis extends BasicSimObj {
     SimEventSemaphore semaphore;
 
     public SmoBis(SimEventSemaphore semaphore) {
-        this.kolejka=new Kolejka(true,1,false);
+        this.kolejka=new Kolejka(true,4,false);
         this.semaphore = semaphore;
         this.czasSMO= new MonitoredVar();
     }

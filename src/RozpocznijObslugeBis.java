@@ -33,7 +33,7 @@ public class RozpocznijObslugeBis extends BasicSimEvent<SmoBis,Zgloszenie> {
             smoParent.getSemaphore().open();
         }
         // Wygeneruj czas obsługi
-        double czasObslugi = generator.normal(9.0, 1.0);
+        double czasObslugi = generator.normal(16.0, 1.0);
         //System.out.println(simTime()+" - "+simDate(SimParameters.SimDateField.HOUR24)+" - "+simDate(SimParameters.SimDateField.MINUTE)+" - "+simDate(SimParameters.SimDateField.SECOND)+" - "+simDate(SimParameters.SimDateField.MILLISECOND)+": SMO- Początek obsługi zgl. nr: " + zgl.getTenNr());
         // Zaplanuj koniec obsługi
         smoParent.zakonczObsluge = new ZakonczObslugeBis(smoParent, czasObslugi, zgl);

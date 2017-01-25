@@ -59,9 +59,9 @@ public class ZakonczObsluge extends BasicSimEvent<Smo, Zgloszenie>
 					smoParent.rozpocznijObsluge = new RozpocznijObsluge(smoParent);
 				}
 			}else{
-				smoParent.getCzasSMO().setValue(
-						simTime()-transitionParams.getCzasOdniesienia());
 				if(smoParent.getSmoBis().getKolejka().dodaj(transitionParams)){
+					smoParent.getCzasSMO().setValue(
+				 			simTime() - transitionParams.getCzasOdniesienia());
 					System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": SMOBis-trafilo do kolejki  zgl. nr:" + transitionParams.getTenNr());
 					smoParent.setWolne(true);
 					if(smoParent.getSmoBis().getLiczZgl()==1&& smoParent.getSmoBis().isWolne()==true){
